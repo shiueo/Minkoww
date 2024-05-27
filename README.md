@@ -16,7 +16,8 @@ The Twin Paradox is a thought experiment in special relativity that illustrates 
 As can be seen from above, the facts perceived by B and A do not match, hence it operates as a paradox.
 
 ## How can we resolve it?
-![Twin Paradox Diagram](src/twin_minkowski.png)
+![Twin Paradox Diagram](src/twin_minkowski.png)  
+
 The spaceship, after traveling to a point close to the speed of light, needs to change direction to return to Earth. This means it needs to accelerate in the opposite direction from its original trajectory. From the moment the spaceship starts accelerating back towards Earth, the reference frame changes dramatically, and Earth's time begins to flow incredibly fast (similar to time travel). As a result, the person who traveled into space ends up younger, which aligns with the observed resolution of the paradox.
 
 ## Why Minkoww is Needed
