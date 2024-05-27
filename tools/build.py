@@ -26,7 +26,7 @@ def build(
                 should_include.append(os.path.join(os.path.dirname(path), file_dict[i]))
 
         command = (
-            f"python -m nuitka --clang --show-modules --follow-imports "
+            f"python -m nuitka --show-modules --follow-imports "
             f"--windows-company-name={companyname} --windows-product-version={product_version} "
             f"--output-dir={Output_dir_name} --verbose --assume-yes-for-downloads --onefile "
         )
