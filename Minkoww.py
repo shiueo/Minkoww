@@ -1,6 +1,5 @@
 import sys
 import numpy as np
-from PySide6.QtGui import QIcon, QFont
 from PySide6.QtWidgets import (
     QApplication,
     QWidget,
@@ -83,10 +82,6 @@ class Minkoww_Window(QWidget):
 
             self.ax.plot(x, t, label=f'Speed: {speed}')
             self.ax.legend()
-
-            # 시간선 격자 추가
-            self.draw_time_lines(speed)
-
             self.canvas.draw()
 
             # 객체 속성을 리스트에 추가
@@ -109,14 +104,32 @@ class Minkoww_Window(QWidget):
         except ValueError:
             QMessageBox.warning(self, "Invalid input", "Please enter a numeric value for speed.")
 
-    def draw_time_lines(self, speed):
-        # 시간선 격자 그리기
-        t = np.linspace(0, 10, 100)
-        x = speed * t
-        self.ax.plot(x, t, color='green', linestyle='--', linewidth=0.5)
-
     def select_object(self, item, speed):
-        pass
+        row = self.object_list.row(item)
+        self.object_list.takeItem(row)
+
+        line_color = None
+        for line in self.ax.get_lines():
+            label = line.get_label()
+            if label == f"Speed: {speed}":
+                line_color = line.get_color()
+                break
+
+        # 못 찾은 경우
+        if line_color is None:
+            line_color = 'black'
+
+        t = np.linspace(0, 10, 100)
+        inverse_speed = 1 / speed
+        # 일정 간격으로 y축을 올려가며 시간선 그리기
+        for i in range(100):
+            x_inverse = inverse_speed * t - i*0.5  # y축으로 0.5씩 올려가며 그립니다.
+            label = f'Inverse Speed {i + 1}: {speed}'
+            self.ax.plot(x_inverse, t, color=line_color, linestyle='--', label=label, linewidth=1,
+                         alpha=0.5)
+
+        self.ax.legend()
+        self.canvas.draw()
 
     def remove_object(self, item, speed):
         row = self.object_list.row(item)
@@ -142,11 +155,13 @@ class Minkoww_Window(QWidget):
             list_item = self.object_list.item(i)
             speed_str = list_item.text().split(": ")[1]
             speed = float(speed_str)
+
             t = np.linspace(0, 10, 100)
             x = speed * t
+
             self.ax.plot(x, t, label=f'Speed: {speed}')
             self.ax.legend()
-            self.draw_time_lines(speed)
+            self.canvas.draw()
 
         self.canvas.draw()
 
