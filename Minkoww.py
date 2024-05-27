@@ -80,19 +80,19 @@ class Minkoww_Window(QWidget):
             t = np.linspace(0, 10, 100)
             x = speed * t
 
-            self.ax.plot(x, t, label=f'Speed: {speed}')
+            self.ax.plot(x, t, label=f'Speed: {speed}c')
             self.ax.legend()
             self.canvas.draw()
 
             # 객체 속성을 리스트에 추가
-            item = QListWidgetItem(f"Speed: {speed}")
+            item = QListWidgetItem(f"Speed: {speed}c")
             remove_button = QPushButton("Remove")
             remove_button.clicked.connect(lambda: self.remove_object(item, speed))
             select_button = QPushButton("Select")
             select_button.clicked.connect(lambda: self.select_object(item, speed))
             item_widget = QWidget()
             item_layout = QHBoxLayout()
-            item_layout.addWidget(QLabel(f"Speed: {speed}"))
+            item_layout.addWidget(QLabel(f"Speed: {speed}c"))
             item_layout.addWidget(remove_button)
             item_layout.addWidget(select_button)
             item_layout.addStretch()
@@ -105,13 +105,10 @@ class Minkoww_Window(QWidget):
             QMessageBox.warning(self, "Invalid input", "Please enter a numeric value for speed.")
 
     def select_object(self, item, speed):
-        row = self.object_list.row(item)
-        self.object_list.takeItem(row)
-
         line_color = None
         for line in self.ax.get_lines():
             label = line.get_label()
-            if label == f"Speed: {speed}":
+            if label == f"Speed: {speed}c":
                 line_color = line.get_color()
                 break
 
@@ -122,10 +119,9 @@ class Minkoww_Window(QWidget):
         t = np.linspace(0, 10, 100)
         inverse_speed = 1 / speed
         # 일정 간격으로 y축을 올려가며 시간선 그리기
-        for i in range(100):
-            x_inverse = inverse_speed * t - i*0.5  # y축으로 0.5씩 올려가며 그립니다.
-            label = f'Inverse Speed {i + 1}: {speed}'
-            self.ax.plot(x_inverse, t, color=line_color, linestyle='--', label=label, linewidth=1,
+        for i in range(10):
+            x_inverse = inverse_speed * t - i*int((1/speed))  # y축으로 0.5씩 올려가며 그립니다.
+            self.ax.plot(x_inverse, t, color=line_color, linestyle='--', label='_nolegend_', linewidth=1,
                          alpha=0.5)
 
         self.ax.legend()
@@ -138,7 +134,7 @@ class Minkoww_Window(QWidget):
         # 그래프에서 해당 객체의 경로를 제거
         for line in self.ax.get_lines():
             label = line.get_label()
-            if label == f"Speed: {speed}":
+            if label == f"Speed: {speed}c":
                 line.remove()
 
         # 축 범위 다시 설정
@@ -154,12 +150,12 @@ class Minkoww_Window(QWidget):
         for i in range(self.object_list.count()):
             list_item = self.object_list.item(i)
             speed_str = list_item.text().split(": ")[1]
-            speed = float(speed_str)
+            speed = float(speed_str[:-1])
 
             t = np.linspace(0, 10, 100)
             x = speed * t
 
-            self.ax.plot(x, t, label=f'Speed: {speed}')
+            self.ax.plot(x, t, label=f'Speed: {speed}c')
             self.ax.legend()
             self.canvas.draw()
 
