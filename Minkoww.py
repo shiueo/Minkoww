@@ -95,7 +95,6 @@ class Minkoww_Window(QWidget):
             item_layout.addWidget(QLabel(f"Speed: {speed}c"))
             item_layout.addWidget(remove_button)
             item_layout.addWidget(select_button)
-            item_layout.addStretch()
             item_widget.setLayout(item_layout)
             item.setSizeHint(item_widget.sizeHint())
             self.object_list.addItem(item)
