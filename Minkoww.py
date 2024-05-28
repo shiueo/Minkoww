@@ -22,7 +22,7 @@ class Minkoww_Window(QWidget):
         super(Minkoww_Window, self).__init__()
 
         self.setWindowTitle("Minkoww")
-        self.setMinimumSize(1280, 720)
+        self.setMinimumSize(1340, 720)
 
         self.layout = QHBoxLayout(self)
         self.setLayout(self.layout)
